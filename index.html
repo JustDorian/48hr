@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trump's Strait of Hormuz Ultimatum</title>
+  <title>Hormuz Ultimatum Tracker</title>
   <meta name="description" content="48-hour countdown tied to Donald Trump's Truth Social post about the Strait of Hormuz." />
-  <meta property="og:title" content="Trump's Strait of Hormuz Ultimatum" />
+  <meta property="og:title" content="Hormuz Ultimatum Tracker" />
   <meta property="og:description" content="A fixed 48-hour countdown tied to Truth Social post 116269822349947644." />
-  <meta name="theme-color" content="#05070a" />
+  <meta name="theme-color" content="#04110b" />
 
   <style>
     :root{
-      --bg:#030507;
-      --bg2:#081019;
-      --panel:#0c141d;
-      --panel2:#101a25;
-      --line:#1d2a36;
-      --line-strong:#2c4254;
-      --text:#e8f1f8;
-      --muted:#8ea3b5;
-      --glow:#7fd0ff;
-      --glow-soft:rgba(127,208,255,.14);
-      --red:#ff5b5b;
-      --amber:#ffcc66;
-      --shadow:rgba(0,0,0,.55);
+      --bg:#020705;
+      --bg2:#07110d;
+      --panel:#0a1712;
+      --panel2:#0d1d17;
+      --line:#173328;
+      --line-strong:#24513e;
+      --text:#ddffe9;
+      --muted:#88b59d;
+      --glow:#7cffb2;
+      --glow-soft:rgba(124,255,178,.14);
+      --warn:#ffd36b;
+      --danger:#ff6b6b;
+      --shadow:rgba(0,0,0,.58);
     }
 
     *{
@@ -34,8 +34,8 @@
       margin:0;
       min-height:100%;
       background:
-        radial-gradient(circle at top center, rgba(127,208,255,.08), transparent 26%),
-        radial-gradient(circle at 80% 20%, rgba(255,91,91,.06), transparent 22%),
+        radial-gradient(circle at top center, rgba(124,255,178,.08), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(124,255,178,.05), transparent 22%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color:var(--text);
       font-family: Arial, Helvetica, sans-serif;
@@ -48,10 +48,10 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+        linear-gradient(rgba(124,255,178,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,255,178,.025) 1px, transparent 1px);
       background-size:38px 38px;
-      opacity:.22;
+      opacity:.24;
     }
 
     body::after{
@@ -62,8 +62,8 @@
       background:
         repeating-linear-gradient(
           to bottom,
-          rgba(255,255,255,.016) 0px,
-          rgba(255,255,255,.016) 1px,
+          rgba(255,255,255,.015) 0px,
+          rgba(255,255,255,.015) 1px,
           transparent 2px,
           transparent 4px
         );
@@ -83,12 +83,12 @@
       width:min(1180px, 100%);
       border:1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.025), transparent 16%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 16%),
         linear-gradient(180deg, var(--panel), var(--panel2));
       box-shadow:
         0 0 0 1px rgba(255,255,255,.02) inset,
         0 20px 60px var(--shadow),
-        0 0 45px rgba(127,208,255,.07);
+        0 0 45px rgba(124,255,178,.08);
       position:relative;
       overflow:hidden;
     }
@@ -148,8 +148,8 @@
       width:10px;
       height:10px;
       border-radius:50%;
-      background:var(--red);
-      box-shadow:0 0 14px rgba(255,91,91,.85);
+      background:var(--glow);
+      box-shadow:0 0 14px rgba(124,255,178,.9);
       animation:pulse 1.4s infinite ease-in-out;
     }
 
@@ -162,7 +162,7 @@
       overflow:hidden;
       white-space:nowrap;
       border-bottom:1px solid var(--line);
-      background:#08111a;
+      background:#08130f;
     }
 
     .ticker-track{
@@ -172,7 +172,7 @@
       text-transform:uppercase;
       letter-spacing:.18em;
       font-size:11px;
-      color:#b7c9d8;
+      color:#b6dfc4;
       animation:scroll 26s linear infinite;
     }
 
@@ -212,7 +212,7 @@
     }
 
     .eyebrow{
-      color:var(--amber);
+      color:var(--warn);
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:.18em;
@@ -225,46 +225,64 @@
       font-size:clamp(30px, 5vw, 64px);
       line-height:.98;
       text-transform:uppercase;
-      letter-spacing:.04em;
+      letter-spacing:.05em;
       font-weight:900;
-      color:#f3f8fc;
+      color:var(--glow);
       text-shadow:
-        0 0 12px rgba(127,208,255,.14),
-        0 0 26px rgba(127,208,255,.08);
+        0 0 12px rgba(124,255,178,.18),
+        0 0 26px rgba(124,255,178,.08);
     }
 
     .sub{
-      margin:0 0 24px;
+      margin:0 0 22px;
       max-width:68ch;
-      color:#c2d1dc;
+      color:#c7ead3;
       font-size:15px;
       line-height:1.55;
     }
 
     .quote{
-      margin:0 0 22px;
-      border-left:3px solid var(--red);
-      background:rgba(255,91,91,.05);
+      margin:0 0 20px;
+      border-left:3px solid var(--glow);
+      background:rgba(124,255,178,.05);
       padding:14px 16px;
-      color:#f8dede;
+      color:#e7fff0;
       line-height:1.55;
       font-size:14px;
     }
 
-    .quote strong{
-      color:#fff;
+    .post-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 22px;
+      padding:12px 14px;
+      border:1px solid var(--line-strong);
+      background:rgba(124,255,178,.04);
+      color:var(--glow);
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:12px;
+      font-weight:700;
+      box-shadow:0 0 18px rgba(124,255,178,.05);
+    }
+
+    .post-link:hover{
+      background:rgba(124,255,178,.08);
+      box-shadow:0 0 22px rgba(124,255,178,.10);
     }
 
     .timer-shell{
       position:relative;
       border:1px solid var(--line-strong);
       background:
-        linear-gradient(180deg, rgba(127,208,255,.05), rgba(127,208,255,.01)),
+        linear-gradient(180deg, rgba(124,255,178,.05), rgba(124,255,178,.01)),
         rgba(0,0,0,.16);
       padding:18px;
       box-shadow:
         inset 0 0 0 1px rgba(255,255,255,.02),
-        0 0 24px rgba(127,208,255,.05);
+        0 0 24px rgba(124,255,178,.05);
     }
 
     .timer-shell::before{
@@ -287,8 +305,8 @@
       letter-spacing:.06em;
       color:var(--glow);
       text-shadow:
-        0 0 10px rgba(127,208,255,.35),
-        0 0 24px rgba(127,208,255,.16);
+        0 0 10px rgba(124,255,178,.35),
+        0 0 24px rgba(124,255,178,.16);
       word-break:break-word;
     }
 
@@ -310,7 +328,7 @@
     .progress{
       height:14px;
       border:1px solid var(--line);
-      background:#071018;
+      background:#07110d;
       overflow:hidden;
       position:relative;
     }
@@ -321,10 +339,10 @@
       background:
         repeating-linear-gradient(
           90deg,
-          rgba(127,208,255,.95) 0 18px,
-          rgba(255,91,91,.85) 18px 36px
+          rgba(124,255,178,.95) 0 18px,
+          rgba(84,220,139,.75) 18px 36px
         );
-      box-shadow:0 0 14px rgba(127,208,255,.22);
+      box-shadow:0 0 14px rgba(124,255,178,.22);
       transition:width .8s linear;
     }
 
@@ -369,14 +387,14 @@
       gap:12px;
       padding:12px 14px;
       border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,91,91,.05), rgba(255,91,91,.02));
+      background:linear-gradient(180deg, rgba(124,255,178,.05), rgba(124,255,178,.02));
       text-transform:uppercase;
       letter-spacing:.12em;
       font-size:12px;
     }
 
     .alert strong{
-      color:var(--amber);
+      color:var(--warn);
     }
 
     .panel{
@@ -397,7 +415,7 @@
       font-family:"Courier New", Courier, monospace;
       font-size:14px;
       line-height:1.55;
-      color:#eef4f9;
+      color:#eefcf2;
       word-break:break-word;
     }
 
@@ -428,30 +446,39 @@
   <div class="page">
     <div class="console">
       <div class="topbar">
-        <div><strong>Trump's Strait of Hormuz Ultimatum</strong> // Post 116269822349947644</div>
+        <div><strong>Hormuz Ultimatum Tracker</strong> // Post 116269822349947644</div>
         <div class="status">
           <span class="dot"></span>
-          <span>Strike Console Live</span>
+          <span>Console Live</span>
         </div>
       </div>
 
       <div class="ticker">
         <div class="ticker-track">
-          truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • offensive console • live countdown • truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • offensive console • live countdown •
+          truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • green tactical console • live countdown • truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • green tactical console • live countdown •
         </div>
       </div>
 
       <div class="main">
         <section class="left">
           <div class="eyebrow">Ultimatum Tracker</div>
-          <h1 class="headline">Trump's Strait of Hormuz Ultimatum</h1>
+          <h1 class="headline">Hormuz Ultimatum Tracker</h1>
           <p class="sub">
-            This page is dedicated to the specific Truth Social post that set a 48-hour deadline over the Strait of Hormuz. The countdown is fixed to that post's timestamp and starts immediately when the page loads.
+            Fixed 48-hour countdown tied to the referenced Truth Social post. The page loads directly into the active countdown window with no controls, no settings, and no reset.
           </p>
 
           <div class="quote">
-            <strong>Post reference:</strong> “If Iran doesn't FULLY OPEN, WITHOUT THREAT, the Strait of Hormuz, within 48 HOURS...” 
+            <strong>Tracked post:</strong> “If Iran doesn't FULLY OPEN, WITHOUT THREAT, the Strait of Hormuz, within 48 HOURS...”
           </div>
+
+          <a
+            class="post-link"
+            href="https://truthsocial.com/@realDonaldTrump/posts/116269822349947644"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Original Truth Social Post
+          </a>
 
           <div class="timer-shell">
             <div class="timer" id="timer">48:00:00</div>
@@ -495,7 +522,7 @@
               Dedicated to Truth Social post 116269822349947644.<br>
               Fixed start: March 21, 2026, 19:44 EDT.<br>
               Countdown length: 48 hours.<br>
-              No controls. No customization. No reset.
+              Link to original post embedded on-page.
             </div>
           </div>
 
@@ -516,16 +543,13 @@
       <div class="footer">
         <span>Anchor: 2026-03-21 19:44 EDT</span>
         <span>Window: 48 hours</span>
-        <span>Mode: tactical offensive</span>
+        <span>Mode: green tactical</span>
       </div>
     </div>
   </div>
 
   <script>
     const TOTAL_MS = 48 * 60 * 60 * 1000;
-
-    // Post time from archive:
-    // Saturday, March 21, 2026, 7:44 PM EDT = 2026-03-21T23:44:00Z
     const START_UTC = new Date("2026-03-21T23:44:00Z");
 
     function pad(n) {
