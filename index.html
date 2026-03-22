@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trump's Next Fuckup</title>
-  <meta name="description" content="A fixed 48-hour countdown since the most recent 23:44." />
-  <meta property="og:title" content="Trump's Next Fuckup" />
-  <meta property="og:description" content="A fixed 48-hour countdown since the most recent 23:44." />
-  <meta name="theme-color" content="#0a0a0a" />
+  <title>Trump's Strait of Hormuz Ultimatum</title>
+  <meta name="description" content="48-hour countdown tied to Donald Trump's Truth Social post about the Strait of Hormuz." />
+  <meta property="og:title" content="Trump's Strait of Hormuz Ultimatum" />
+  <meta property="og:description" content="A fixed 48-hour countdown tied to Truth Social post 116269822349947644." />
+  <meta name="theme-color" content="#05070a" />
 
   <style>
     :root{
-      --bg:#040404;
-      --bg2:#0d0d0d;
-      --panel:#121212;
-      --panel2:#181818;
-      --line:#2b2b2b;
-      --text:#f3f3f3;
-      --muted:#a7a7a7;
-      --red:#ff4d4d;
-      --red-soft:rgba(255,77,77,.14);
-      --amber:#ffcf66;
-      --white-soft:rgba(255,255,255,.05);
+      --bg:#030507;
+      --bg2:#081019;
+      --panel:#0c141d;
+      --panel2:#101a25;
+      --line:#1d2a36;
+      --line-strong:#2c4254;
+      --text:#e8f1f8;
+      --muted:#8ea3b5;
+      --glow:#7fd0ff;
+      --glow-soft:rgba(127,208,255,.14);
+      --red:#ff5b5b;
+      --amber:#ffcc66;
+      --shadow:rgba(0,0,0,.55);
     }
 
     *{
@@ -32,7 +34,8 @@
       margin:0;
       min-height:100%;
       background:
-        radial-gradient(circle at top center, rgba(255,77,77,.08), transparent 34%),
+        radial-gradient(circle at top center, rgba(127,208,255,.08), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(255,91,91,.06), transparent 22%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
       color:var(--text);
       font-family: Arial, Helvetica, sans-serif;
@@ -46,9 +49,9 @@
       pointer-events:none;
       background:
         linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-      background-size:36px 36px;
-      opacity:.25;
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size:38px 38px;
+      opacity:.22;
     }
 
     body::after{
@@ -56,13 +59,14 @@
       position:fixed;
       inset:0;
       pointer-events:none;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 1px,
-        transparent 2px,
-        transparent 4px
-      );
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.016) 0px,
+          rgba(255,255,255,.016) 1px,
+          transparent 2px,
+          transparent 4px
+        );
       opacity:.12;
       mix-blend-mode:screen;
     }
@@ -75,60 +79,61 @@
       padding:24px;
     }
 
-    .board{
-      width:min(1150px, 100%);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%),
-        linear-gradient(180deg, #101010 0%, #141414 100%);
+    .console{
+      width:min(1180px, 100%);
       border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent 16%),
+        linear-gradient(180deg, var(--panel), var(--panel2));
       box-shadow:
         0 0 0 1px rgba(255,255,255,.02) inset,
-        0 10px 40px rgba(0,0,0,.55),
-        0 0 50px rgba(255,77,77,.08);
-      overflow:hidden;
+        0 20px 60px var(--shadow),
+        0 0 45px rgba(127,208,255,.07);
       position:relative;
+      overflow:hidden;
     }
 
-    .board::before,
-    .board::after{
+    .console::before,
+    .console::after{
       content:"";
       position:absolute;
-      width:24px;
-      height:24px;
-      border-color:var(--red);
-      opacity:.9;
+      width:22px;
+      height:22px;
+      border-color:var(--glow);
+      opacity:.95;
       pointer-events:none;
     }
 
-    .board::before{
+    .console::before{
       top:12px;
       left:12px;
-      border-top:2px solid var(--red);
-      border-left:2px solid var(--red);
+      border-top:2px solid var(--glow);
+      border-left:2px solid var(--glow);
     }
 
-    .board::after{
+    .console::after{
       right:12px;
       bottom:12px;
-      border-right:2px solid var(--red);
-      border-bottom:2px solid var(--red);
+      border-right:2px solid var(--glow);
+      border-bottom:2px solid var(--glow);
     }
 
     .topbar{
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
       gap:16px;
       padding:14px 18px;
       border-bottom:1px solid var(--line);
       background:rgba(255,255,255,.02);
       text-transform:uppercase;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
       font-size:12px;
       color:var(--muted);
     }
 
-    .topbar-left{
+    .topbar strong{
+      color:var(--text);
       font-weight:700;
     }
 
@@ -139,26 +144,49 @@
       white-space:nowrap;
     }
 
-    .status-dot{
+    .dot{
       width:10px;
       height:10px;
       border-radius:50%;
       background:var(--red);
-      box-shadow:0 0 12px rgba(255,77,77,.8);
+      box-shadow:0 0 14px rgba(255,91,91,.85);
       animation:pulse 1.4s infinite ease-in-out;
     }
 
     @keyframes pulse{
-      0%,100%{ transform:scale(1); opacity:1; }
-      50%{ transform:scale(.78); opacity:.45; }
+      0%,100%{opacity:1; transform:scale(1);}
+      50%{opacity:.45; transform:scale(.78);}
+    }
+
+    .ticker{
+      overflow:hidden;
+      white-space:nowrap;
+      border-bottom:1px solid var(--line);
+      background:#08111a;
+    }
+
+    .ticker-track{
+      display:inline-block;
+      min-width:100%;
+      padding:10px 0;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:11px;
+      color:#b7c9d8;
+      animation:scroll 26s linear infinite;
+    }
+
+    @keyframes scroll{
+      0%{ transform:translateX(0); }
+      100%{ transform:translateX(-50%); }
     }
 
     .main{
       display:grid;
-      grid-template-columns: 1.3fr .7fr;
+      grid-template-columns:1.3fr .7fr;
     }
 
-    @media (max-width: 930px){
+    @media (max-width: 940px){
       .main{
         grid-template-columns:1fr;
       }
@@ -169,7 +197,7 @@
       border-right:1px solid var(--line);
     }
 
-    @media (max-width: 930px){
+    @media (max-width: 940px){
       .left{
         border-right:none;
         border-bottom:1px solid var(--line);
@@ -184,55 +212,68 @@
     }
 
     .eyebrow{
-      display:inline-block;
       color:var(--amber);
+      font-size:12px;
       text-transform:uppercase;
       letter-spacing:.18em;
-      font-size:12px;
       margin-bottom:12px;
       font-weight:700;
     }
 
     .headline{
       margin:0 0 12px;
-      font-size:clamp(34px, 6vw, 72px);
-      line-height:.95;
+      font-size:clamp(30px, 5vw, 64px);
+      line-height:.98;
       text-transform:uppercase;
+      letter-spacing:.04em;
       font-weight:900;
-      letter-spacing:.03em;
-      color:var(--red);
+      color:#f3f8fc;
       text-shadow:
-        0 0 12px rgba(255,77,77,.22),
-        0 0 28px rgba(255,77,77,.12);
+        0 0 12px rgba(127,208,255,.14),
+        0 0 26px rgba(127,208,255,.08);
     }
 
     .sub{
       margin:0 0 24px;
-      max-width:65ch;
-      color:#d2d2d2;
-      line-height:1.55;
+      max-width:68ch;
+      color:#c2d1dc;
       font-size:15px;
+      line-height:1.55;
+    }
+
+    .quote{
+      margin:0 0 22px;
+      border-left:3px solid var(--red);
+      background:rgba(255,91,91,.05);
+      padding:14px 16px;
+      color:#f8dede;
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .quote strong{
+      color:#fff;
     }
 
     .timer-shell{
-      border:1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,77,77,.04), transparent 80%),
-        rgba(0,0,0,.18);
-      padding:18px;
       position:relative;
+      border:1px solid var(--line-strong);
+      background:
+        linear-gradient(180deg, rgba(127,208,255,.05), rgba(127,208,255,.01)),
+        rgba(0,0,0,.16);
+      padding:18px;
       box-shadow:
         inset 0 0 0 1px rgba(255,255,255,.02),
-        0 0 24px rgba(255,77,77,.06);
+        0 0 24px rgba(127,208,255,.05);
     }
 
     .timer-shell::before{
-      content:"TIME UNTIL NEXT ONE";
+      content:"ULTIMATUM WINDOW";
       position:absolute;
       top:-10px;
       left:14px;
       padding:0 8px;
-      background:#121212;
+      background:var(--panel);
       color:var(--muted);
       font-size:11px;
       letter-spacing:.16em;
@@ -241,13 +282,13 @@
 
     .timer{
       font-family: "Arial Black", Arial, Helvetica, sans-serif;
-      font-size:clamp(44px, 10vw, 118px);
+      font-size:clamp(42px, 10vw, 116px);
       line-height:1;
       letter-spacing:.06em;
-      color:#fff5f5;
+      color:var(--glow);
       text-shadow:
-        0 0 12px rgba(255,77,77,.20),
-        0 0 24px rgba(255,77,77,.10);
+        0 0 10px rgba(127,208,255,.35),
+        0 0 24px rgba(127,208,255,.16);
       word-break:break-word;
     }
 
@@ -269,7 +310,7 @@
     .progress{
       height:14px;
       border:1px solid var(--line);
-      background:#090909;
+      background:#071018;
       overflow:hidden;
       position:relative;
     }
@@ -280,10 +321,10 @@
       background:
         repeating-linear-gradient(
           90deg,
-          rgba(255,77,77,.95) 0 18px,
-          rgba(255,130,130,.7) 18px 36px
+          rgba(127,208,255,.95) 0 18px,
+          rgba(255,91,91,.85) 18px 36px
         );
-      box-shadow:0 0 14px rgba(255,77,77,.25);
+      box-shadow:0 0 14px rgba(127,208,255,.22);
       transition:width .8s linear;
     }
 
@@ -294,7 +335,7 @@
       gap:12px;
     }
 
-    @media (max-width: 640px){
+    @media (max-width: 680px){
       .stats{
         grid-template-columns:1fr;
       }
@@ -316,19 +357,19 @@
 
     .stat-v{
       font-size:22px;
-      line-height:1.3;
+      line-height:1.35;
       color:var(--text);
       word-break:break-word;
     }
 
     .alert{
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
       gap:12px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,77,77,.06), rgba(255,77,77,.02));
       padding:12px 14px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,91,91,.05), rgba(255,91,91,.02));
       text-transform:uppercase;
       letter-spacing:.12em;
       font-size:12px;
@@ -353,36 +394,11 @@
     }
 
     .mono{
-      font-family: "Courier New", Courier, monospace;
+      font-family:"Courier New", Courier, monospace;
       font-size:14px;
       line-height:1.55;
-      color:#f1f1f1;
+      color:#eef4f9;
       word-break:break-word;
-    }
-
-    .ticker{
-      margin-top:14px;
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      background:#0b0b0b;
-      overflow:hidden;
-      white-space:nowrap;
-    }
-
-    .ticker-track{
-      display:inline-block;
-      padding:10px 0;
-      min-width:100%;
-      animation:scroll 22s linear infinite;
-      color:#d6d6d6;
-      text-transform:uppercase;
-      font-size:12px;
-      letter-spacing:.16em;
-    }
-
-    @keyframes scroll{
-      0%{ transform:translateX(0); }
-      100%{ transform:translateX(-50%); }
     }
 
     .footer{
@@ -410,36 +426,39 @@
 </head>
 <body>
   <div class="page">
-    <div class="board">
+    <div class="console">
       <div class="topbar">
-        <div class="topbar-left">Trump's Next Fuckup // Live Countdown</div>
+        <div><strong>Trump's Strait of Hormuz Ultimatum</strong> // Post 116269822349947644</div>
         <div class="status">
-          <span class="status-dot"></span>
-          <span>Feed Active</span>
+          <span class="dot"></span>
+          <span>Strike Console Live</span>
         </div>
       </div>
 
       <div class="ticker">
         <div class="ticker-track">
-          Disaster watch • fixed 48-hour cycle • anchored to most recent 23:44 • no controls • no settings • always counting • disaster watch • fixed 48-hour cycle • anchored to most recent 23:44 • no controls • no settings • always counting •
+          truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • offensive console • live countdown • truth social post 116269822349947644 • 48-hour ultimatum • strait of hormuz • fixed start time • offensive console • live countdown •
         </div>
       </div>
 
       <div class="main">
         <section class="left">
-          <div class="eyebrow">Disaster Watch</div>
-          <h1 class="headline">Trump's Next Fuckup</h1>
+          <div class="eyebrow">Ultimatum Tracker</div>
+          <h1 class="headline">Trump's Strait of Hormuz Ultimatum</h1>
           <p class="sub">
-            A fixed 48-hour countdown locked to the most recent 23:44.
-            Open the page and it immediately shows how much time is left in the current cycle.
+            This page is dedicated to the specific Truth Social post that set a 48-hour deadline over the Strait of Hormuz. The countdown is fixed to that post's timestamp and starts immediately when the page loads.
           </p>
+
+          <div class="quote">
+            <strong>Post reference:</strong> “If Iran doesn't FULLY OPEN, WITHOUT THREAT, the Strait of Hormuz, within 48 HOURS...” 
+          </div>
 
           <div class="timer-shell">
             <div class="timer" id="timer">48:00:00</div>
 
             <div class="progress-wrap">
               <div class="progress-head">
-                <span>Cycle burn rate</span>
+                <span>Ultimatum burn rate</span>
                 <span id="progressText">0.00% elapsed</span>
               </div>
               <div class="progress">
@@ -450,11 +469,11 @@
 
           <div class="stats">
             <div class="stat">
-              <div class="stat-k">Cycle Start</div>
+              <div class="stat-k">Post Time</div>
               <div class="stat-v" id="startTime">--</div>
             </div>
             <div class="stat">
-              <div class="stat-k">Cycle End</div>
+              <div class="stat-k">Deadline</div>
               <div class="stat-v" id="endTime">--</div>
             </div>
             <div class="stat">
@@ -466,15 +485,17 @@
 
         <aside class="right">
           <div class="alert">
-            <span>Scandal Pressure</span>
-            <strong id="condition">Nominal</strong>
+            <span>Escalation Level</span>
+            <strong id="condition">Low</strong>
           </div>
 
           <div class="panel">
-            <div class="panel-title">What This Tracks</div>
+            <div class="panel-title">Mission Profile</div>
             <div class="mono">
-              The remaining time in a fixed 48-hour window starting from the latest daily checkpoint at 23:44.
-              No user input. No custom settings. Just the clock.
+              Dedicated to Truth Social post 116269822349947644.<br>
+              Fixed start: March 21, 2026, 19:44 EDT.<br>
+              Countdown length: 48 hours.<br>
+              No controls. No customization. No reset.
             </div>
           </div>
 
@@ -486,16 +507,16 @@
           </div>
 
           <div class="panel">
-            <div class="panel-title">Local Time</div>
+            <div class="panel-title">Local Device Time</div>
             <div class="mono" id="nowTime">--</div>
           </div>
         </aside>
       </div>
 
       <div class="footer">
-        <span>Reference point: 23:44 daily</span>
-        <span>Cycle duration: 48 hours</span>
-        <span>Display mode: tabloid counter</span>
+        <span>Anchor: 2026-03-21 19:44 EDT</span>
+        <span>Window: 48 hours</span>
+        <span>Mode: tactical offensive</span>
       </div>
     </div>
   </div>
@@ -503,16 +524,9 @@
   <script>
     const TOTAL_MS = 48 * 60 * 60 * 1000;
 
-    function getMostRecent2344(now) {
-      const anchor = new Date(now);
-      anchor.setHours(23, 44, 0, 0);
-
-      if (now < anchor) {
-        anchor.setDate(anchor.getDate() - 1);
-      }
-
-      return anchor;
-    }
+    // Post time from archive:
+    // Saturday, March 21, 2026, 7:44 PM EDT = 2026-03-21T23:44:00Z
+    const START_UTC = new Date("2026-03-21T23:44:00Z");
 
     function pad(n) {
       return String(n).padStart(2, "0");
@@ -540,7 +554,8 @@
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit"
+        second: "2-digit",
+        timeZoneName: "short"
       });
     }
 
@@ -548,33 +563,38 @@
       if (percentElapsed < 25) return "Low";
       if (percentElapsed < 50) return "Building";
       if (percentElapsed < 75) return "Elevated";
-      if (percentElapsed < 95) return "Hot";
-      return "Imminent";
+      if (percentElapsed < 95) return "Critical";
+      return "Terminal";
     }
 
     function update() {
       const now = new Date();
-      const start = getMostRecent2344(now);
-      const end = new Date(start.getTime() + TOTAL_MS);
+      const end = new Date(START_UTC.getTime() + TOTAL_MS);
 
-      const elapsedMs = now - start;
+      const elapsedMs = now - START_UTC;
       const remainingMs = end - now;
-      const percentElapsed = Math.min(100, Math.max(0, (elapsedMs / TOTAL_MS) * 100));
 
-      document.getElementById("timer").textContent = formatHMS(remainingMs);
-      document.getElementById("startTime").textContent = fmtDate(start);
+      const clampedRemaining = Math.max(0, remainingMs);
+      const clampedElapsed = Math.min(TOTAL_MS, Math.max(0, elapsedMs));
+      const percentElapsed = Math.min(100, Math.max(0, (clampedElapsed / TOTAL_MS) * 100));
+
+      document.getElementById("timer").textContent =
+        remainingMs > 0 ? formatHMS(clampedRemaining) : "00:00:00";
+
+      document.getElementById("startTime").textContent = fmtDate(START_UTC);
       document.getElementById("endTime").textContent = fmtDate(end);
-      document.getElementById("elapsed").textContent = formatElapsed(elapsedMs);
+      document.getElementById("elapsed").textContent = formatElapsed(clampedElapsed);
       document.getElementById("bar").style.width = percentElapsed + "%";
       document.getElementById("progressText").textContent = percentElapsed.toFixed(2) + "% elapsed";
-      document.getElementById("condition").textContent = getCondition(percentElapsed);
+      document.getElementById("condition").textContent = remainingMs > 0 ? getCondition(percentElapsed) : "Expired";
       document.getElementById("nowTime").textContent = fmtDate(now);
 
       document.getElementById("telemetry").innerHTML =
-        `ANCHOR: 23:44 DAILY<br>` +
-        `COUNTDOWN: ${formatHMS(remainingMs)}<br>` +
-        `ELAPSED: ${formatElapsed(elapsedMs)}<br>` +
-        `PRESSURE: ${getCondition(percentElapsed)}`;
+        `POST ID: 116269822349947644<br>` +
+        `START: ${fmtDate(START_UTC)}<br>` +
+        `DEADLINE: ${fmtDate(end)}<br>` +
+        `REMAINING: ${remainingMs > 0 ? formatHMS(clampedRemaining) : "00:00:00"}<br>` +
+        `STATUS: ${remainingMs > 0 ? getCondition(percentElapsed) : "Expired"}`;
     }
 
     update();
