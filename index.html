@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defense Countdown Console</title>
+  <style>
+    :root{
+      --bg:#050b0d;
+      --panel:#091317;
+      --panel-2:#0d1b20;
+      --line:#1d3b42;
+      --glow:#7CFFB2;
+      --glow-soft:rgba(124,255,178,0.18);
+      --text:#d7ffe8;
+      --muted:#86b79d;
+      --warn:#ffd36b;
+      --danger:#ff6b6b;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:
+        radial-gradient(circle at top, rgba(124,255,178,0.06), transparent 30%),
+        linear-gradient(180deg, #030607 0%, #071014 100%);
+      color:var(--text);
+      font-family: "Courier New", Courier, monospace;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(124,255,178,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,255,178,0.03) 1px, transparent 1px);
+      background-size:40px 40px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.6));
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.02) 0px,
+        rgba(255,255,255,0.02) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+      opacity:.2;
+      mix-blend-mode:screen;
+    }
+
+    .shell{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+    }
+
+    .console{
+      width:min(1100px, 100%);
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 20%),
+        linear-gradient(180deg, var(--panel), var(--panel-2));
+      box-shadow:
+        0 0 0 1px rgba(124,255,178,0.06) inset,
+        0 0 30px rgba(0,0,0,0.5),
+        0 0 60px rgba(124,255,178,0.08);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .console::before,
+    .console::after{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:18px;
+      border-color:var(--glow);
+      opacity:.8;
+    }
+
+    .console::before{
+      top:10px; left:10px;
+      border-top:2px solid;
+      border-left:2px solid;
+    }
+
+    .console::after{
+      right:10px; bottom:10px;
+      border-right:2px solid;
+      border-bottom:2px solid;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 18px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .status{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--glow);
+      box-shadow:0 0 12px var(--glow);
+      animation:pulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulse{
+      0%,100%{opacity:1; transform:scale(1);}
+      50%{opacity:.45; transform:scale(.8);}
+    }
+
+    .main{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:0;
+    }
+
+    @media (max-width: 900px){
+      .main{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .primary{
+      padding:28px;
+      border-right:1px solid var(--line);
+    }
+
+    @media (max-width: 900px){
+      .primary{
+        border-right:none;
+        border-bottom:1px solid var(--line);
+      }
+    }
+
+    .secondary{
+      padding:20px;
+      display:grid;
+      gap:16px;
+      align-content:start;
+    }
+
+    .label{
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:12px;
+      margin-bottom:10px;
+    }
+
+    .headline{
+      font-size:clamp(24px, 4vw, 44px);
+      margin:0 0 12px;
+      line-height:1.05;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      text-shadow:0 0 12px rgba(124,255,178,.12);
+    }
+
+    .sub{
+      margin:0 0 22px;
+      color:#a7d6be;
+      max-width:60ch;
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .timer-frame{
+      position:relative;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(124,255,178,.04), rgba(124,255,178,.01)),
+        rgba(0,0,0,.18);
+      padding:18px;
+      box-shadow:
+        inset 0 0 0 1px rgba(124,255,178,.03),
+        0 0 22px rgba(124,255,178,.05);
+    }
+
+    .timer-frame::before{
+      content:"TIME REMAINING";
+      position:absolute;
+      top:-10px;
+      left:14px;
+      font-size:11px;
+      padding:0 8px;
+      background:var(--panel);
+      color:var(--muted);
+      letter-spacing:.16em;
+    }
+
+    .timer{
+      font-size:clamp(46px, 10vw, 112px);
+      line-height:1;
+      font-weight:700;
+      letter-spacing:.08em;
+      color:var(--glow);
+      text-shadow:
+        0 0 8px rgba(124,255,178,.35),
+        0 0 22px rgba(124,255,178,.12);
+      word-break:break-word;
+    }
+
+    .progress-wrap{
+      margin-top:18px;
+    }
+
+    .progress-label{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+
+    .progress{
+      height:14px;
+      border:1px solid var(--line);
+      background:#051014;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .bar{
+      height:100%;
+      width:0%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(124,255,178,.85) 0 16px,
+          rgba(124,255,178,.55) 16px 32px
+        );
+      box-shadow:0 0 15px rgba(124,255,178,.24);
+      transition:width .8s linear;
+    }
+
+    .grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+
+    @media (max-width: 620px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      padding:14px;
+      background:rgba(255,255,255,.015);
+    }
+
+    .stat .k{
+      color:var(--muted);
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .stat .v{
+      font-size:22px;
+      color:var(--text);
+      text-shadow:0 0 10px rgba(124,255,178,.08);
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.015);
+      padding:14px;
+      position:relative;
+    }
+
+    .panel-title{
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:11px;
+      margin-bottom:12px;
+    }
+
+    .mono{
+      font-size:14px;
+      line-height:1.5;
+      color:var(--text);
+      word-break:break-word;
+    }
+
+    .threat{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.15);
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.12em;
+    }
+
+    .threat strong{
+      color:var(--warn);
+      text-shadow:0 0 10px rgba(255,211,107,.15);
+    }
+
+    .footer{
+      padding:14px 18px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      background:rgba(255,255,255,.015);
+    }
+
+    .blink{
+      animation:blink 1s steps(2, start) infinite;
+    }
+
+    @keyframes blink{
+      to{visibility:hidden;}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="console">
+      <div class="topbar">
+        <div>Strategic Defense Command // Countdown Console</div>
+        <div class="status">
+          <span class="dot"></span>
+          <span>System Online</span>
+        </div>
+      </div>
+
+      <div class="main">
+        <section class="primary">
+          <div class="label">Operation Window</div>
+          <h1 class="headline">48 Hour Tactical Countdown</h1>
+          <p class="sub">
+            Live countdown from the most recent daily checkpoint at 23:44.
+            Console updates continuously on page load.
+          </p>
+
+          <div class="timer-frame">
+            <div class="timer" id="timer">48:00:00</div>
+
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <span>Window Consumption</span>
+                <span id="progressText">0.00% elapsed</span>
+              </div>
+              <div class="progress">
+                <div class="bar" id="bar"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="stat">
+              <div class="k">Checkpoint Start</div>
+              <div class="v" id="startTime">--</div>
+            </div>
+            <div class="stat">
+              <div class="k">Window End</div>
+              <div class="v" id="endTime">--</div>
+            </div>
+            <div class="stat">
+              <div class="k">Elapsed</div>
+              <div class="v" id="elapsed">--</div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="secondary">
+          <div class="threat">
+            <span>Threat Condition</span>
+            <strong id="condition">Monitoring</strong>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Mission Logic</div>
+            <div class="mono">
+              Reference time locks to the latest 23:44.<br>
+              Countdown duration remains fixed at 48 hours.<br>
+              No user input. No controls. No overrides.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Console Telemetry</div>
+            <div class="mono" id="telemetry">
+              STATUS: SYNCING<span class="blink">_</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Local System Time</div>
+            <div class="mono" id="nowTime">--</div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <span>Fixed reference: 23:44 daily</span>
+        <span>Cycle length: 48 hours</span>
+        <span>Display mode: command station</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL_MS = 48 * 60 * 60 * 1000;
+
+    function getMostRecent2344(now) {
+      const anchor = new Date(now);
+      anchor.setHours(23, 44, 0, 0);
+      if (now < anchor) {
+        anchor.setDate(anchor.getDate() - 1);
+      }
+      return anchor;
+    }
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function formatHMS(ms) {
+      const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function formatElapsed(ms) {
+      const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      return `${pad(hours)}h ${pad(minutes)}m`;
+    }
+
+    function fmtDate(date) {
+      return date.toLocaleString([], {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+    }
+
+    function getCondition(percentElapsed) {
+      if (percentElapsed < 25) return "Nominal";
+      if (percentElapsed < 50) return "Monitoring";
+      if (percentElapsed < 75) return "Elevated";
+      if (percentElapsed < 95) return "Critical";
+      return "Terminal";
+    }
+
+    function update() {
+      const now = new Date();
+      const start = getMostRecent2344(now);
+      const end = new Date(start.getTime() + TOTAL_MS);
+
+      const elapsedMs = now - start;
+      const remainingMs = end - now;
+      const percentElapsed = Math.min(100, Math.max(0, (elapsedMs / TOTAL_MS) * 100));
+
+      document.getElementById("timer").textContent = formatHMS(remainingMs);
+      document.getElementById("startTime").textContent = fmtDate(start);
+      document.getElementById("endTime").textContent = fmtDate(end);
+      document.getElementById("elapsed").textContent = formatElapsed(elapsedMs);
+      document.getElementById("bar").style.width = percentElapsed + "%";
+      document.getElementById("progressText").textContent = percentElapsed.toFixed(2) + "% elapsed";
+      document.getElementById("condition").textContent = getCondition(percentElapsed);
+      document.getElementById("nowTime").textContent = fmtDate(now);
+      document.getElementById("telemetry").innerHTML =
+        `SYNC: LOCKED<br>` +
+        `ANCHOR: 23:44 DAILY<br>` +
+        `REMAINING: ${formatHMS(remainingMs)}<br>` +
+        `WINDOW STATUS: ${getCondition(percentElapsed)}`;
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
