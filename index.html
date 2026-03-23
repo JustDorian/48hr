@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trump's next fuck up - Hormuz Ultimatum Tracker</title>
-  <meta name="description" content="48-hour countdown tied to Donald Trump's Truth Social post about the Strait of Hormuz." />
-  <meta property="og:title" content="Hormuz Ultimatum Tracker" />
-  <meta property="og:description" content="A fixed 48-hour countdown tied to Truth Social post 116269822349947644." />
+  <title>Trump's next fuck up - Live Tracker Console</title>
+  <meta name="description" content="Primary 5-day countdown tied to Trump's Truth Social postponement post, with the original Hormuz 48-hour tracker retained as secondary." />
+  <meta property="og:title" content="Trump's next fuck up - Live Tracker Console" />
+  <meta property="og:description" content="Primary 5-day postponement countdown plus original Hormuz ultimatum tracker." />
   <meta name="theme-color" content="#04110b" />
 
   <style>
@@ -79,7 +79,7 @@
     }
 
     .console{
-      width:min(1180px, 100%);
+      width:min(1280px, 100%);
       border:1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,.02), transparent 16%),
@@ -165,14 +165,19 @@
     }
 
     .ticker-track{
-      display:inline-block;
-      min-width:100%;
+      display:flex;
+      width:max-content;
+      gap:2rem;
       padding:10px 0;
       text-transform:uppercase;
       letter-spacing:.18em;
       font-size:11px;
       color:#b6dfc4;
-      animation:scroll 26s linear infinite;
+      animation:scroll 28s linear infinite;
+    }
+
+    .ticker-track span{
+      flex:none;
     }
 
     @keyframes scroll{
@@ -182,10 +187,10 @@
 
     .main{
       display:grid;
-      grid-template-columns:1.3fr .7fr;
+      grid-template-columns:1.35fr .65fr;
     }
 
-    @media (max-width: 940px){
+    @media (max-width: 980px){
       .main{
         grid-template-columns:1fr;
       }
@@ -196,7 +201,7 @@
       border-right:1px solid var(--line);
     }
 
-    @media (max-width: 940px){
+    @media (max-width: 980px){
       .left{
         border-right:none;
         border-bottom:1px solid var(--line);
@@ -234,7 +239,7 @@
 
     .sub{
       margin:0 0 22px;
-      max-width:68ch;
+      max-width:72ch;
       color:#c7ead3;
       font-size:15px;
       line-height:1.55;
@@ -250,11 +255,17 @@
       font-size:14px;
     }
 
+    .link-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:0 0 22px;
+    }
+
     .post-link{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      margin:0 0 22px;
       padding:12px 14px;
       border:1px solid var(--line-strong);
       background:rgba(124,255,178,.04);
@@ -272,6 +283,18 @@
       box-shadow:0 0 22px rgba(124,255,178,.10);
     }
 
+    .tracker-block{
+      margin-bottom:22px;
+    }
+
+    .section-tag{
+      margin-bottom:12px;
+      color:var(--muted);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+    }
+
     .timer-shell{
       position:relative;
       border:1px solid var(--line-strong);
@@ -285,7 +308,7 @@
     }
 
     .timer-shell::before{
-      content:"ULTIMATUM WINDOW";
+      content:attr(data-label);
       position:absolute;
       top:-10px;
       left:14px;
@@ -295,6 +318,17 @@
       font-size:11px;
       letter-spacing:.16em;
       text-transform:uppercase;
+    }
+
+    .timer-shell.primary-shell{
+      padding:20px;
+    }
+
+    .timer-shell.secondary-shell{
+      border-color:var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        rgba(0,0,0,.12);
     }
 
     .timer{
@@ -308,6 +342,12 @@
         0 0 10px rgba(124,255,178,.35),
         0 0 24px rgba(124,255,178,.16);
       word-break:break-word;
+    }
+
+    .timer.secondary{
+      font-size:clamp(28px, 7vw, 64px);
+      color:#dff9e8;
+      text-shadow:none;
     }
 
     .progress-wrap{
@@ -346,6 +386,26 @@
       transition:width .8s linear;
     }
 
+    .bar.warning{
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,211,107,.95) 0 18px,
+          rgba(225,171,57,.75) 18px 36px
+        );
+      box-shadow:0 0 14px rgba(255,211,107,.22);
+    }
+
+    .bar.danger{
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,107,107,.95) 0 18px,
+          rgba(224,72,72,.75) 18px 36px
+        );
+      box-shadow:0 0 14px rgba(255,107,107,.22);
+    }
+
     .stats{
       margin-top:22px;
       display:grid;
@@ -353,7 +413,7 @@
       gap:12px;
     }
 
-    @media (max-width: 680px){
+    @media (max-width: 760px){
       .stats{
         grid-template-columns:1fr;
       }
@@ -419,6 +479,18 @@
       word-break:break-word;
     }
 
+    .small{
+      font-size:13px;
+      color:#d7f4e1;
+      line-height:1.55;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:6px 0 2px;
+    }
+
     .footer{
       padding:14px 18px;
       border-top:1px solid var(--line);
@@ -446,7 +518,7 @@
   <div class="page">
     <div class="console">
       <div class="topbar">
-        <div><strong>Trump's next fuckup - Hormuz Ultimatum Tracker</strong> // Post 116269822349947644</div>
+        <div><strong>Trump's next fuck up - Live Tracker Console</strong> // PRIMARY POST 116278232362967212</div>
         <div class="status">
           <span class="dot"></span>
           <span>Console Live</span>
@@ -455,81 +527,136 @@
 
       <div class="ticker">
         <div class="ticker-track">
-          
-Trump’s next fuckup • KABOOM • 48-hour ultimatum • strait of hormuz • live countdown • Trump’s next fuckup • KABOOM • 48-hour ultimatum • strait of hormuz • live countdown
+          <span>Trump’s next fuckup • five day postponement • live countdown • original hormuz tracker retained • kaboom delayed • truth social live monitor •</span>
+          <span>Trump’s next fuckup • five day postponement • live countdown • original hormuz tracker retained • kaboom delayed • truth social live monitor •</span>
         </div>
       </div>
 
       <div class="main">
         <section class="left">
-          <div class="eyebrow">Ultimatum Tracker</div>
-          <h1 class="headline">Trump's next fuckup - Hormuz Ultimatum Tracker</h1>
+          <div class="eyebrow">Primary Tracker</div>
+          <h1 class="headline">Trump's next fuckup - Strike Postponement Tracker</h1>
           <p class="sub">
-            Fixed 48-hour countdown tied to the referenced Truth Social post.
+            Primary countdown tied to the newer Truth Social post announcing a five day postponement of military strikes. The original Hormuz ultimatum tracker remains live below as a secondary readout.
           </p>
 
           <div class="quote">
-            <strong>Tracked post:</strong> “If Iran doesn't FULLY OPEN, WITHOUT THREAT, the Strait of Hormuz, within 48 HOURS...”
+            <strong>Tracked primary post:</strong> “I AM PLEASED TO REPORT THAT THE UNITED STATES OF AMERICA, AND THE COUNTRY OF IRAN, HAVE HAD, OVER THE LAST TWO DAYS, VERY GOOD AND PRODUCTIVE CONVERSATIONS REGARDING A COMPLETE AND TOTAL RESOLUTION OF OUR HOSTILITIES IN THE MIDDLE EAST... I HAVE INSTRUCTED THE DEPARTMENT OF WAR TO POSTPONE ANY AND ALL MILITARY STRIKES AGAINST IRANIAN POWER PLANTS AND ENERGY INFRASTRUCTURE FOR A FIVE DAY PERIOD...”
           </div>
 
-          <a
-            class="post-link"
-            href="https://truthsocial.com/@realDonaldTrump/posts/116269822349947644"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open Original Truth Social Post
-          </a>
+          <div class="link-row">
+            <a
+              class="post-link"
+              href="https://truthsocial.com/@realDonaldTrump/116278232362967212"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Primary Truth Social Post
+            </a>
 
-          <div class="timer-shell">
-            <div class="timer" id="timer">48:00:00</div>
+            <a
+              class="post-link"
+              href="https://truthsocial.com/@realDonaldTrump/posts/116269822349947644"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Original Hormuz Post
+            </a>
+          </div>
 
-            <div class="progress-wrap">
-              <div class="progress-head">
-                <span>Ultimatum burn rate</span>
-                <span id="progressText">0.00% elapsed</span>
+          <div class="tracker-block">
+            <div class="section-tag">Primary Readout / Five Day Delay Window</div>
+            <div class="timer-shell primary-shell" data-label="STRIKE POSTPONEMENT WINDOW">
+              <div class="timer" id="primaryTimer">120:00:00</div>
+
+              <div class="progress-wrap">
+                <div class="progress-head">
+                  <span>Postponement burn rate</span>
+                  <span id="primaryProgressText">0.00% elapsed</span>
+                </div>
+                <div class="progress">
+                  <div class="bar" id="primaryBar"></div>
+                </div>
               </div>
-              <div class="progress">
-                <div class="bar" id="bar"></div>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-k">Primary Post Time</div>
+                <div class="stat-v" id="primaryStartTime">--</div>
+              </div>
+              <div class="stat">
+                <div class="stat-k">Primary Deadline</div>
+                <div class="stat-v" id="primaryEndTime">--</div>
+              </div>
+              <div class="stat">
+                <div class="stat-k">Primary Elapsed</div>
+                <div class="stat-v" id="primaryElapsed">--</div>
               </div>
             </div>
           </div>
 
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-k">Post Time</div>
-              <div class="stat-v" id="startTime">--</div>
+          <div class="tracker-block">
+            <div class="section-tag">Secondary Readout / Original Hormuz Ultimatum</div>
+            <div class="timer-shell secondary-shell" data-label="ORIGINAL 48 HOUR WINDOW">
+              <div class="timer secondary" id="secondaryTimer">48:00:00</div>
+
+              <div class="progress-wrap">
+                <div class="progress-head">
+                  <span>Original burn rate</span>
+                  <span id="secondaryProgressText">0.00% elapsed</span>
+                </div>
+                <div class="progress">
+                  <div class="bar" id="secondaryBar"></div>
+                </div>
+              </div>
             </div>
-            <div class="stat">
-              <div class="stat-k">Deadline</div>
-              <div class="stat-v" id="endTime">--</div>
-            </div>
-            <div class="stat">
-              <div class="stat-k">Elapsed</div>
-              <div class="stat-v" id="elapsed">--</div>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-k">Original Post Time</div>
+                <div class="stat-v" id="secondaryStartTime">--</div>
+              </div>
+              <div class="stat">
+                <div class="stat-k">Original Deadline</div>
+                <div class="stat-v" id="secondaryEndTime">--</div>
+              </div>
+              <div class="stat">
+                <div class="stat-k">Original Elapsed</div>
+                <div class="stat-v" id="secondaryElapsed">--</div>
+              </div>
             </div>
           </div>
         </section>
 
         <aside class="right">
           <div class="alert">
-            <span>Escalation Level</span>
-            <strong id="condition">Low</strong>
+            <span>Primary Escalation Level</span>
+            <strong id="primaryCondition">Low</strong>
           </div>
 
           <div class="panel">
             <div class="panel-title">Mission Profile</div>
             <div class="mono">
-              Dedicated to Truth Social post 116269822349947644.<br>
+              PRIMARY: Truth Social post 116278232362967212.<br>
+              Fixed start: March 23, 2026, 07:23 EDT.<br>
+              Countdown length: 5 days.<br><br>
+              SECONDARY: Truth Social post 116269822349947644.<br>
               Fixed start: March 21, 2026, 19:44 EDT.<br>
-              Countdown length: 48 hours.<br>
-              Link to original post embedded on-page.
+              Countdown length: 48 hours.
             </div>
           </div>
 
           <div class="panel">
-            <div class="panel-title">Live Readout</div>
-            <div class="mono" id="telemetry">
+            <div class="panel-title">Primary Live Readout</div>
+            <div class="mono" id="primaryTelemetry">
+              STATUS: LOCKING<span class="blink">_</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Secondary Live Readout</div>
+            <div class="mono" id="secondaryTelemetry">
               STATUS: LOCKING<span class="blink">_</span>
             </div>
           </div>
@@ -538,20 +665,30 @@ Trump’s next fuckup • KABOOM • 48-hour ultimatum • strait of hormuz • 
             <div class="panel-title">Local Device Time</div>
             <div class="mono" id="nowTime">--</div>
           </div>
+
+          <div class="panel">
+            <div class="panel-title">Primary Post Text</div>
+            <div class="small">
+              I AM PLEASED TO REPORT THAT THE UNITED STATES OF AMERICA, AND THE COUNTRY OF IRAN, HAVE HAD, OVER THE LAST TWO DAYS, VERY GOOD AND PRODUCTIVE CONVERSATIONS REGARDING A COMPLETE AND TOTAL RESOLUTION OF OUR HOSTILITIES IN THE MIDDLE EAST...
+            </div>
+          </div>
         </aside>
       </div>
 
       <div class="footer">
-        <span>Anchor: 2026-03-21 19:44 EDT</span>
-        <span>Window: 48 hours</span>
+        <span>Primary Anchor: 2026-03-23 07:23 EDT</span>
+        <span>Secondary Anchor: 2026-03-21 19:44 EDT</span>
         <span>Mode: green tactical</span>
       </div>
     </div>
   </div>
 
   <script>
-    const TOTAL_MS = 48 * 60 * 60 * 1000;
-    const START_UTC = new Date("2026-03-21T23:44:00Z");
+    const PRIMARY_TOTAL_MS = 5 * 24 * 60 * 60 * 1000;
+    const SECONDARY_TOTAL_MS = 48 * 60 * 60 * 1000;
+
+    const PRIMARY_START_UTC = new Date("2026-03-23T11:23:00Z");
+    const SECONDARY_START_UTC = new Date("2026-03-21T23:44:00Z");
 
     function pad(n) {
       return String(n).padStart(2, "0");
@@ -567,8 +704,14 @@ Trump’s next fuckup • KABOOM • 48-hour ultimatum • strait of hormuz • 
 
     function formatElapsed(ms) {
       const totalSeconds = Math.max(0, Math.floor(ms / 1000));
-      const hours = Math.floor(totalSeconds / 3600);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+      if (days > 0) {
+        return `${days}d ${pad(hours)}h ${pad(minutes)}m`;
+      }
+
       return `${pad(hours)}h ${pad(minutes)}m`;
     }
 
@@ -592,34 +735,102 @@ Trump’s next fuckup • KABOOM • 48-hour ultimatum • strait of hormuz • 
       return "Terminal";
     }
 
-    function update() {
-      const now = new Date();
-      const end = new Date(START_UTC.getTime() + TOTAL_MS);
+    function getBarClass(percentElapsed, expired) {
+      if (expired || percentElapsed >= 95) return "bar danger";
+      if (percentElapsed >= 75) return "bar warning";
+      return "bar";
+    }
 
-      const elapsedMs = now - START_UTC;
+    function updateTracker(config) {
+      const now = new Date();
+      const end = new Date(config.start.getTime() + config.totalMs);
+
+      const elapsedMs = now - config.start;
       const remainingMs = end - now;
 
       const clampedRemaining = Math.max(0, remainingMs);
-      const clampedElapsed = Math.min(TOTAL_MS, Math.max(0, elapsedMs));
-      const percentElapsed = Math.min(100, Math.max(0, (clampedElapsed / TOTAL_MS) * 100));
+      const clampedElapsed = Math.min(config.totalMs, Math.max(0, elapsedMs));
+      const percentElapsed = Math.min(100, Math.max(0, (clampedElapsed / config.totalMs) * 100));
+      const status = remainingMs > 0 ? getCondition(percentElapsed) : "Expired";
 
-      document.getElementById("timer").textContent =
+      document.getElementById(config.timerId).textContent =
         remainingMs > 0 ? formatHMS(clampedRemaining) : "00:00:00";
 
-      document.getElementById("startTime").textContent = fmtDate(START_UTC);
-      document.getElementById("endTime").textContent = fmtDate(end);
-      document.getElementById("elapsed").textContent = formatElapsed(clampedElapsed);
-      document.getElementById("bar").style.width = percentElapsed + "%";
-      document.getElementById("progressText").textContent = percentElapsed.toFixed(2) + "% elapsed";
-      document.getElementById("condition").textContent = remainingMs > 0 ? getCondition(percentElapsed) : "Expired";
-      document.getElementById("nowTime").textContent = fmtDate(now);
+      document.getElementById(config.startId).textContent = fmtDate(config.start);
+      document.getElementById(config.endId).textContent = fmtDate(end);
+      document.getElementById(config.elapsedId).textContent = formatElapsed(clampedElapsed);
 
-      document.getElementById("telemetry").innerHTML =
-        `POST ID: 116269822349947644<br>` +
-        `START: ${fmtDate(START_UTC)}<br>` +
+      const bar = document.getElementById(config.barId);
+      bar.style.width = percentElapsed + "%";
+      bar.className = getBarClass(percentElapsed, remainingMs <= 0);
+
+      document.getElementById(config.progressId).textContent = percentElapsed.toFixed(2) + "% elapsed";
+
+      if (config.conditionId) {
+        document.getElementById(config.conditionId).textContent = status;
+      }
+
+      document.getElementById(config.telemetryId).innerHTML =
+        `POST ID: ${config.postId}<br>` +
+        `START: ${fmtDate(config.start)}<br>` +
         `DEADLINE: ${fmtDate(end)}<br>` +
         `REMAINING: ${remainingMs > 0 ? formatHMS(clampedRemaining) : "00:00:00"}<br>` +
-        `STATUS: ${remainingMs > 0 ? getCondition(percentElapsed) : "Expired"}`;
+        `STATUS: ${status}`;
+
+      return {
+        now,
+        percentElapsed,
+        remainingMs,
+        status
+      };
+    }
+
+    function updateTheme(status) {
+      const root = document.documentElement;
+
+      if (status === "Critical" || status === "Terminal") {
+        root.style.setProperty("--glow", "#ffd36b");
+        root.style.setProperty("--line-strong", "#7a6230");
+      } else if (status === "Expired") {
+        root.style.setProperty("--glow", "#ff6b6b");
+        root.style.setProperty("--line-strong", "#7a2c2c");
+      } else {
+        root.style.setProperty("--glow", "#7cffb2");
+        root.style.setProperty("--line-strong", "#24513e");
+      }
+    }
+
+    function update() {
+      const primary = updateTracker({
+        totalMs: PRIMARY_TOTAL_MS,
+        start: PRIMARY_START_UTC,
+        timerId: "primaryTimer",
+        startId: "primaryStartTime",
+        endId: "primaryEndTime",
+        elapsedId: "primaryElapsed",
+        barId: "primaryBar",
+        progressId: "primaryProgressText",
+        conditionId: "primaryCondition",
+        telemetryId: "primaryTelemetry",
+        postId: "116278232362967212"
+      });
+
+      updateTracker({
+        totalMs: SECONDARY_TOTAL_MS,
+        start: SECONDARY_START_UTC,
+        timerId: "secondaryTimer",
+        startId: "secondaryStartTime",
+        endId: "secondaryEndTime",
+        elapsedId: "secondaryElapsed",
+        barId: "secondaryBar",
+        progressId: "secondaryProgressText",
+        telemetryId: "secondaryTelemetry",
+        postId: "116269822349947644"
+      });
+
+      updateTheme(primary.status);
+
+      document.getElementById("nowTime").textContent = fmtDate(primary.now);
     }
 
     update();
